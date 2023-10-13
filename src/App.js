@@ -1,81 +1,60 @@
-import { useState } from "react";
 import "./App.css";
 
+import { useState } from "react";
+
 function App() {
-  const [PrimaryValues, setPrimaryValues] = useState(null);
-  const [SecondaryValues, setSecondaryValues] = useState(null);
-  const [operator, setOperator] = useState(null)
+  const [currColor, setCurrColor] = useState("violet");
 
-  const valueClick = (value) => {
-    console.log(value);
-    setPrimaryValues((val) => {
-      if (val === null) {
-        return value;
-      } else {
-        return val * 10 + value;
-      }
-    });
-  };
+  const [display, setDisplay] = useState("violet");
 
-  const onOperator = (op) => {
-    setSecondaryValues(PrimaryValues)
-    setOperator(op)
-    setPrimaryValues(null)
-  }
-
-  const calculate = () => {
-    if (operator === '+') {
-      setPrimaryValues(SecondaryValues + PrimaryValues)
-    } else if (operator === 'X') {
-      setPrimaryValues(SecondaryValues * PrimaryValues)
-    } else if (operator === '%') {
-      setPrimaryValues(SecondaryValues % PrimaryValues)
-    } else if (operator === '^') {
-      setPrimaryValues(SecondaryValues ** PrimaryValues)
-    }
-    setSecondaryValues(null)
-    setOperator(null)
+  const updateColor = (col) => {
+    setCurrColor(col)
+    setDisplay(!display)
   }
 
   return (
     <div className="App">
-      <div className="result2">{SecondaryValues ? SecondaryValues : ""}</div>
-      <div className="resultop">{operator ? operator : ""}</div>
-      <div className="result">{PrimaryValues ? PrimaryValues : ""}</div>
-      <div className="buttonContainer">
-        <button onClick={() => valueClick(7)}>7</button>
-        <button onClick={() => valueClick(8)}>8</button>
-        <button onClick={() => valueClick(9)}>9</button>
+      {display && (
+        <div>
+          <button
+            style={{ backgroundColor: "violet" }}
+            onClick={() => updateColor("violet")}
+          ></button>
+          <button
+            style={{ backgroundColor: "indigo" }}
+            onClick={() => updateColor("indigo")}
+          ></button>
+          <button
+            style={{ backgroundColor: "blue" }}
+            onClick={() => updateColor("blue")}
+          ></button>
+          <button
+            style={{ backgroundColor: "green" }}
+            onClick={() => updateColor("green")}
+          ></button>
+          <button
+            style={{ backgroundColor: "yellow" }}
+            onClick={() => updateColor("yellow")}
+          ></button>
+          <button
+            style={{ backgroundColor: "orange" }}
+            onClick={() => updateColor("orange")}
+          ></button>
+          <button
+            style={{ backgroundColor: "red" }}
+            onClick={() => updateColor("red")}
+          ></button>
+        </div>
+      )}
+      <div>
         <button
+          style={{ backgroundColor: currColor, width: 200, borderRadius: 32 }}
           onClick={() => {
-            setPrimaryValues((val) => {
-              if (val) {
-                return parseInt(val / 10);
-              } else {
-                return null;
-              }
-            });
+            setDisplay(!display);
           }}
         >
-          Back
+          Pick me
         </button>
-        <button onClick={() => valueClick(4)}>4</button>
-        <button onClick={() => valueClick(5)}>5</button>
-        <button onClick={() => valueClick(6)}>6</button>
-        <button onClick={()=> onOperator('%')} >%</button>
-        <button onClick={() => valueClick(1)}>1</button>
-        <button onClick={() => valueClick(2)}>2</button>
-        <button onClick={() => valueClick(3)}>3</button>
-        <button onClick={()=> onOperator('X')} >X</button>
-        <button
-          onClick={() => valueClick(0)}
-          style={{ borderBottomLeftRadius: 32 }}
-        >
-          0
-        </button>
-        <button onClick={()=> onOperator('^')} >^</button>
-        <button onClick={calculate} >=</button>
-        <button onClick={()=> onOperator('+')}  style={{ borderBottomRightRadius: 32 }}>+</button>
       </div>
     </div>
   );
